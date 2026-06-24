@@ -1,20 +1,8 @@
-# ELF Format Cheatsheet — Bản dịch tiếng Việt có hình minh họa
+# ELF Format Cheatsheet — Bản dịch tiếng Việt kèm ảnh gốc
 
 > Nguồn gốc: Gist `elf_format_cheatsheet.md` của `x0nu11byt3`  
+> Ghi chú ảnh: Bản này dùng **16 ảnh gốc trong phần nội dung chính của Gist**. File `.md` đã được sửa sang đường dẫn local `images/...` để đưa lên GitHub repository. Chạy `python download_images.py` để tải ảnh vào thư mục `images/`. Không dùng ảnh tự vẽ/tự chế.  
 > Ghi chú dịch: Các thuật ngữ/ký hiệu nên giữ nguyên trong tiếng Anh như `ELF`, `section`, `segment`, `Program Header`, `Section Header`, `dynamic linker`, `relocation`, `GOT`, `PLT`, `PIC/PIE`, `ASLR`, tên struct, macro, section name và symbol name được giữ nguyên để dễ tra cứu tài liệu kỹ thuật.
-> Ghi chú hình minh họa: Các sơ đồ trong bản này được vẽ lại để hỗ trợ học/ôn tập. Đây là sơ đồ giải thích khái niệm, không phải memory map tuyệt đối cho mọi binary.
-
-## Danh mục hình minh họa
-
-- Hình 1 — Bố cục cơ bản của ELF file.
-- Hình 2 — Pipeline biên dịch tạo ELF.
-- Hình 3 — Các trường quan trọng trong ELF Header (`Ehdr`).
-- Hình 4 — Section vs Segment.
-- Hình 5 — Dynamic Linking, PLT và GOT.
-- Hình 6 — Relocation flow.
-- Hình 7 — ELF trên disk vs khi được load vào memory.
-- Hình 8 — Symbol table và string table.
-
 
 ---
 
@@ -22,15 +10,13 @@
 
 **Executable and Linkable Format (ELF)** là định dạng binary mặc định trên các hệ thống dựa trên Linux.
 
-![Hình 1 — Bố cục cơ bản của ELF file](images/01_elf_file_layout.png)
+![ELF — ảnh gốc từ Gist](images/01_elf_overview.png)
 
 ## Compilation
 
-![Hình 2 — Pipeline biên dịch tạo ELF](images/02_compilation_pipeline.png)
+![Compilation — ảnh gốc từ Gist](images/02_compilation_pipeline.png)
 
 ## Executable Headers (`Ehdr`)
-
-![Hình 3 — Các trường quan trọng trong ELF Header (`Ehdr`)](images/03_ehdr_fields.png)
 
 Đây là phần duy nhất của ELF bắt buộc phải nằm tại một vị trí cụ thể, tức là ở đầu file ELF.
 
@@ -154,8 +140,6 @@ Trong file gốc có liệt kê rất nhiều `EM_*` khác như `EM_SPARC`, `EM_
 ---
 
 ## Section Headers (`Shdr`)
-
-![Hình 4 — Section vs Segment](images/04_sections_vs_segments.png)
 
 Code và data được chia thành các khối liên tiếp, không chồng lấn nhau, gọi là **sections**.
 
@@ -435,8 +419,6 @@ Phân chia giữa segment và section:
 
 ## Symbols
 
-![Hình 8 — Symbol table và string table](images/08_symbol_tables.png)
-
 Symbols là các tham chiếu symbolic tới một loại data hoặc code nào đó, ví dụ global variable hoặc function.
 
 ### 32-bit struct
@@ -498,7 +480,7 @@ typedef struct
 - `ELFN_ST_TYPE(st_info)`: Lấy giá trị `st_type` từ `st_info`.
 - `ELFN_ST_INFO(st_bind, st_type)`: Tạo `st_info` từ `st_bind` và `st_type`.
 
-> Hình minh họa: Symbols — xem trong Gist gốc.
+![Symbols — ảnh gốc từ Gist](images/03_symbols.jpg)
 
 ```c
 #define ELF32_ST_BIND(val)       (((unsigned char) (val)) >> 4)
@@ -531,9 +513,9 @@ typedef struct
 
 ## Dynamic Linking
 
-![Hình 5 — Dynamic Linking, PLT và GOT](images/05_dynamic_linking_got_plt.png)
+![ELF Dynamic Linking — ảnh gốc từ Gist](images/04_elf_dynamic_linking.png)
 
-> Hình minh họa: ELF Dynamic Linking và Dynamic Linking — xem trong Gist gốc.
+![Dynamic Linking — ảnh gốc từ Gist](images/05_dynamic_linking_lazy_binding.png)
 
 **Dynamic linking** là quá trình resolve functions từ external libraries, tức shared objects.
 
@@ -603,11 +585,11 @@ Instruction `pushl` đầu tiên push địa chỉ của GOT entry thứ hai, `G
 
 ### Static Linking
 
-> Hình minh họa: Static Linking — xem trong Gist gốc.
+![Static Linking — ảnh gốc từ Gist](images/06_static_linking.png)
 
 ### Dynamic Linking
 
-> Hình minh họa: Dynamic Linking — xem trong Gist gốc.
+![Dynamic Linking — ảnh gốc từ Gist](images/07_dynamic_linking_static_vs_dynamic.png)
 
 ---
 
@@ -701,8 +683,6 @@ typedef struct
 
 ## Relocation
 
-![Hình 6 — Relocation flow](images/06_relocation_flow.png)
-
 **Relocation** là quá trình kết nối symbolic references với symbolic definitions. Relocatable files phải chứa thông tin mô tả cách sửa nội dung section của chúng, từ đó giúp executable và shared object files có đúng thông tin cho program image của process. Các dữ liệu này gọi là **relocation entries**.
 
 ### `Rel` 32-bit struct
@@ -757,11 +737,11 @@ typedef struct
 
 ### x86 Relocation types
 
-> Hình minh họa: `x86_RELOCATIONS` — xem trong Gist gốc.
+![x86_RELOCATIONS — ảnh gốc từ Gist](images/08_x86_relocations.png)
 
 ### x86_64 Relocation types
 
-> Hình minh họa: `x86_64_RELOCATIONS` — xem trong Gist gốc.
+![x86_64_RELOCATIONS — ảnh gốc từ Gist](images/09_x86_64_relocations.png)
 
 ### Giá trị ký hiệu trong relocation
 
@@ -790,7 +770,7 @@ typedef struct
 - `_GOTOFF`: Absolute address trong GOT.
 - `_GOTPC`: Program-counter-relative GOT offset.
 
-> Hình minh họa: Relocation Image — xem trong Gist gốc.
+![Relocation Image — ảnh gốc từ Gist](images/10_relocation_image.png)
 
 ### Sections liên quan relocation
 
@@ -836,13 +816,11 @@ Khác với một số file format khác, ELF files gồm cả sections và segm
 
 Để hiểu quan hệ giữa sections và segments, có thể xem segments như công cụ giúp Linux loader “đỡ khổ” hơn. Segments gom các sections theo attributes vào một segment duy nhất, giúp quá trình loading của executable hiệu quả hơn, thay vì load từng section riêng lẻ vào memory.
 
-> Hình minh họa: Segments and Sections — xem trong Gist gốc.
+![Segments and Sections — ảnh gốc từ Gist](images/11_segments_and_sections.png)
 
 ---
 
 ## In-memory loaded ELF VS ELF file
-
-![Hình 7 — ELF trên disk vs khi được load vào memory](images/07_loaded_memory_vs_file.png)
 
 ELF files trên disk chỉ là một format mô tả cách load file đó vào memory sao cho chạy đúng.
 
@@ -852,7 +830,13 @@ Kích thước trong memory thường khác kích thước trên disk. Ví dụ,
 
 Tổng quan cơ bản:
 
-- ELF file trên disk — xem hình trong Gist gốc.
+- ELF file trên disk:
+
+![ELF file on disk — ảnh gốc từ Gist](images/12_elf_file_on_disk.png)
+
+- ELF loaded in memory:
+
+![In-memory ELF — ảnh gốc từ Gist](images/13_in_memory_elf.png)
 - ELF loaded in memory — xem hình trong Gist gốc.
 
 ---
@@ -970,7 +954,17 @@ Tóm tắt:
 
 Stack của process address space được setup theo cách rất cụ thể để truyền thông tin cho dynamic linker. Cách setup này gọi là **auxiliary vector** hoặc **auxv**.
 
-> Hình minh họa: Auxiliary vector, Stack init, Sample view — xem trong Gist gốc.
+Auxiliary vector:
+
+![Auxiliary vector — ảnh gốc từ Gist](images/14_auxiliary_vector.png)
+
+Stack init:
+
+![Stack init — ảnh gốc từ Gist](images/15_stack_init.png)
+
+Sample view:
+
+![Sample view — ảnh gốc từ Gist](images/16_sample_view.png)
 
 Struct và auxv type giống phần trên.
 
@@ -1130,6 +1124,28 @@ Khi binary được execute trên một hệ thống khác, interpreter tìm lib
 -- TO DO --
 
 ---
+
+---
+
+## Danh sách ảnh gốc / local path
+
+Bản này đã nhúng đủ các ảnh xuất hiện trong nội dung chính của Gist gốc:
+
+1. ELF — `images/01_elf_overview.png` — nguồn: `https://i.imgur.com/Ai9OqOB.png`
+2. Compilation — `images/02_compilation_pipeline.png` — nguồn: `https://i.imgur.com/LNddTmk.png`
+3. Static Linking — `images/06_static_linking.png` — nguồn: `https://i.imgur.com/g8CQKHm.png`
+4. Dynamic Linking — `images/07_dynamic_linking_static_vs_dynamic.png` — nguồn: `https://i.imgur.com/SSBTMS3.png`
+5. x86_RELOCATIONS — `images/08_x86_relocations.png` — nguồn: `https://i.imgur.com/jJi1BDG.png`
+6. x86_64_RELOCATIONS — `images/09_x86_64_relocations.png` — nguồn: `https://i.imgur.com/0xCx0Ap.png`
+7. Relocation Image — `images/10_relocation_image.png` — nguồn: `https://i.imgur.com/jkKNuhL.png`
+8. Segments and Sections — `images/11_segments_and_sections.png` — nguồn: `https://i.imgur.com/j6K9ycH.png`
+9. ELF file on disk — `images/12_elf_file_on_disk.png` — nguồn: `https://i.imgur.com/qPYlh7B.png`
+10. In-memory ELF — `images/13_in_memory_elf.png` — nguồn: `https://i.imgur.com/sGtvRnH.png`
+11. Auxiliary vector — `images/14_auxiliary_vector.png` — nguồn: `https://i.imgur.com/sRZkt21.png`
+12. Stack init — `images/15_stack_init.png` — nguồn: `https://i.imgur.com/Zy6Js20.png`
+13. Sample view — `images/16_sample_view.png` — nguồn: `https://i.imgur.com/DHxTr7n.png`
+
+> Lưu ý: ảnh được nhúng bằng URL online gốc để khi upload lên GitHub/Gist thì Markdown render được trực tiếp.
 
 ## References
 
