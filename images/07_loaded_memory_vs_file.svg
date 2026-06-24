@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="555" viewBox="0 0 920 555">
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+    <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+  </marker>
+  <style>
+  .title { font: 700 26px Arial, sans-serif; fill: #1f2937; }
+  .subtitle { font: 400 15px Arial, sans-serif; fill: #4b5563; }
+  .label { font: 700 15px Arial, sans-serif; fill: #111827; }
+  .small { font: 400 13px Arial, sans-serif; fill: #374151; }
+  .tiny { font: 400 12px Arial, sans-serif; fill: #4b5563; }
+  .mono { font: 600 13px Consolas, Menlo, monospace; fill: #111827; }
+  .box { stroke: #374151; stroke-width: 1.6; rx: 12; ry: 12; }
+  .arrow { stroke: #374151; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  .dash { stroke-dasharray: 6 5; }
+</style>
+</defs>
+<rect x="0" y="0" width="920" height="555" fill="#ffffff"/>
+<text x="40" y="42" class="title" text-anchor="start">Hình 7 — ELF trên disk vs khi được load vào memory</text>
+<text x="40" y="68" class="subtitle" text-anchor="start">File offset trên disk được loader map thành virtual memory theo các `PT_LOAD` segment.</text>
+<text x="130" y="118" class="label" text-anchor="start">ELF file trên disk</text>
+<rect x="80" y="145" width="250" height="40" class="box" fill="#dbeafe"/>
+<text x="205.0" y="173" class="label" text-anchor="middle">ELF Header</text>
+<rect x="80" y="195" width="250" height="40" class="box" fill="#dcfce7"/>
+<text x="205.0" y="223" class="label" text-anchor="middle">Program Headers</text>
+<rect x="80" y="245" width="250" height="40" class="box" fill="#cffafe"/>
+<text x="205.0" y="273" class="label" text-anchor="middle">.text + .rodata</text>
+<rect x="80" y="295" width="250" height="40" class="box" fill="#ffedd5"/>
+<text x="205.0" y="323" class="label" text-anchor="middle">.data</text>
+<rect x="80" y="345" width="250" height="40" class="box" fill="#e5e7eb"/>
+<text x="205.0" y="373" class="label" text-anchor="middle">.bss metadata</text>
+<rect x="80" y="395" width="250" height="40" class="box" fill="#fee2e2"/>
+<text x="205.0" y="423" class="label" text-anchor="middle">Section Headers</text>
+<text x="620" y="118" class="label" text-anchor="start">Process virtual memory</text>
+<rect x="570" y="145" width="280" height="50" class="box" fill="#cffafe"/>
+<text x="710.0" y="173" class="label" text-anchor="middle">R-X mapping</text>
+<text x="710.0" y="195" class="tiny" text-anchor="middle">.text + .rodata</text>
+<rect x="570" y="213" width="280" height="50" class="box" fill="#ffedd5"/>
+<text x="710.0" y="241" class="label" text-anchor="middle">RW- mapping</text>
+<text x="710.0" y="263" class="tiny" text-anchor="middle">.data + .bss</text>
+<rect x="570" y="281" width="280" height="50" class="box" fill="#fef3c7"/>
+<text x="710.0" y="309" class="label" text-anchor="middle">heap</text>
+<text x="710.0" y="331" class="tiny" text-anchor="middle">malloc/brk</text>
+<rect x="570" y="349" width="280" height="50" class="box" fill="#ede9fe"/>
+<text x="710.0" y="377" class="label" text-anchor="middle">shared libraries</text>
+<text x="710.0" y="399" class="tiny" text-anchor="middle">libc, ld-linux...</text>
+<rect x="570" y="417" width="280" height="50" class="box" fill="#dcfce7"/>
+<text x="710.0" y="445" class="label" text-anchor="middle">stack</text>
+<text x="710.0" y="467" class="tiny" text-anchor="middle">argv/envp/call frames</text>
+<path d="M330,265 L570,170" class="arrow"/>
+<path d="M330,315 L570,238" class="arrow"/>
+<path d="M330,345 L570,238" class="arrow"/>
+<text x="80" y="505" class="small" text-anchor="start">`.bss` thường không chiếm đủ byte trong file, nhưng được cấp phát và zero-fill trong memory.</text>
+</svg>

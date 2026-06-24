@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+    <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+  </marker>
+  <style>
+  .title { font: 700 26px Arial, sans-serif; fill: #1f2937; }
+  .subtitle { font: 400 15px Arial, sans-serif; fill: #4b5563; }
+  .label { font: 700 15px Arial, sans-serif; fill: #111827; }
+  .small { font: 400 13px Arial, sans-serif; fill: #374151; }
+  .tiny { font: 400 12px Arial, sans-serif; fill: #4b5563; }
+  .mono { font: 600 13px Consolas, Menlo, monospace; fill: #111827; }
+  .box { stroke: #374151; stroke-width: 1.6; rx: 12; ry: 12; }
+  .arrow { stroke: #374151; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  .dash { stroke-dasharray: 6 5; }
+</style>
+</defs>
+<rect x="0" y="0" width="980" height="520" fill="#ffffff"/>
+<text x="40" y="42" class="title" text-anchor="start">Hình 2 — Pipeline biên dịch tạo ELF</text>
+<text x="40" y="68" class="subtitle" text-anchor="start">Từ source code đến executable/shared library, mỗi bước tạo ra một dạng object khác nhau.</text>
+<rect x="50" y="150" width="150" height="88" class="box" fill="#dbeafe"/>
+<text x="125.0" y="178" class="label" text-anchor="middle">Source code</text>
+<text x="125.0" y="200" class="tiny" text-anchor="middle">main.c</text>
+<path d="M205,194.0 L225,194.0" class="arrow"/>
+<rect x="230" y="150" width="150" height="88" class="box" fill="#cffafe"/>
+<text x="305.0" y="178" class="label" text-anchor="middle">Preprocessor</text>
+<text x="305.0" y="200" class="tiny" text-anchor="middle">gcc -E</text>
+<path d="M385,194.0 L405,194.0" class="arrow"/>
+<rect x="410" y="150" width="150" height="88" class="box" fill="#dcfce7"/>
+<text x="485.0" y="178" class="label" text-anchor="middle">Compiler</text>
+<text x="485.0" y="200" class="tiny" text-anchor="middle">assembly .s</text>
+<path d="M565,194.0 L585,194.0" class="arrow"/>
+<rect x="590" y="150" width="150" height="88" class="box" fill="#ffedd5"/>
+<text x="665.0" y="178" class="label" text-anchor="middle">Assembler</text>
+<text x="665.0" y="200" class="tiny" text-anchor="middle">relocatable .o</text>
+<path d="M745,194.0 L765,194.0" class="arrow"/>
+<rect x="770" y="150" width="150" height="88" class="box" fill="#ede9fe"/>
+<text x="845.0" y="178" class="label" text-anchor="middle">Linker</text>
+<text x="845.0" y="200" class="tiny" text-anchor="middle">ELF executable / .so</text>
+<rect x="320" y="310" width="300" height="95" class="box" fill="#fef3c7"/>
+<text x="470.0" y="338" class="label" text-anchor="middle">Static linking</text>
+<text x="470.0" y="360" class="tiny" text-anchor="middle">Gộp code thư viện vào executable</text>
+<rect x="640" y="310" width="300" height="95" class="box" fill="#fce7f3"/>
+<text x="790.0" y="338" class="label" text-anchor="middle">Dynamic linking</text>
+<text x="790.0" y="360" class="tiny" text-anchor="middle">Ghi DT_NEEDED, xử lý lúc load/run-time</text>
+<path d="M760,238 L790,310" class="arrow"/>
+<path d="M490,238 L470,310" class="arrow"/>
+<text x="50" y="470" class="small" text-anchor="start">Kết quả thường gặp: `.o` là ET_REL, executable thường là ET_EXEC hoặc ET_DYN/PIE, shared library là ET_DYN.</text>
+</svg>
