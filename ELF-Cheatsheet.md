@@ -1,9 +1,6 @@
 # ELF Format Cheatsheet — Bản dịch tiếng Việt kèm ảnh gốc
 
 > Nguồn gốc: Gist `elf_format_cheatsheet.md` của `x0nu11byt3`  
-> Ghi chú ảnh: Bản này dùng **16 ảnh gốc trong phần nội dung chính của Gist**. File `.md` đã được sửa sang đường dẫn local `images/...` để đưa lên GitHub repository. Chạy `python download_images.py` để tải ảnh vào thư mục `images/`. Không dùng ảnh tự vẽ/tự chế.  
-> Ghi chú dịch: Các thuật ngữ/ký hiệu nên giữ nguyên trong tiếng Anh như `ELF`, `section`, `segment`, `Program Header`, `Section Header`, `dynamic linker`, `relocation`, `GOT`, `PLT`, `PIC/PIE`, `ASLR`, tên struct, macro, section name và symbol name được giữ nguyên để dễ tra cứu tài liệu kỹ thuật.
-
 ---
 
 ## Introduction
